@@ -12,6 +12,7 @@
 #include <signal.h>
 
 #include "fwd_ctrl.h"
+#include "esbe3_drv.h"
 #include "mylog.h"
 #include "sig.h"
 
@@ -43,6 +44,7 @@ int main (int argc, char *argv[])
   fprintf(pid_file_f, "%d\n", (int)(getpid()));
   fclose(pid_file_f);
 
+  init_esbe3_drv();
   FwdCtrl_init();
 
   while(1) {

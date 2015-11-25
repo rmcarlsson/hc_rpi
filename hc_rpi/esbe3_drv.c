@@ -38,7 +38,7 @@ init_esbe3_drv ()
    */
   if ((-1 == GPIOExport (POUT_INC)) || (-1 == GPIOExport (POUT_DEC)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to export GPIO pins");
       raise (SIGTERM);
     }
   /*
@@ -47,7 +47,7 @@ init_esbe3_drv ()
   if ((-1 == GPIODirection (POUT_INC, OUT))
       || (-1 == GPIODirection (POUT_DEC, OUT)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to set GPIO pins as output");
       raise (SIGTERM);
     }
 
@@ -69,7 +69,7 @@ Esbe3_adjust (esbe3_adjust_t action)
       ml_log (LOG_NOTICE, "Increasing shunt ... ");
       if (-1 == GPIOWrite (POUT_INC, 1))
 	{
-	  ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+	  ml_log (LOG_ERROR, "Failed to set pin %d to 1", POUT_INC);
 	  raise (SIGTERM);
 	}
       break;
@@ -78,7 +78,7 @@ Esbe3_adjust (esbe3_adjust_t action)
       ml_log (LOG_NOTICE, "Decreasing shunt ... ");
       if (-1 == GPIOWrite (POUT_DEC, 1))
 	{
-	  ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+	  ml_log (LOG_ERROR, "Failed to set pin %d to 1", POUT_DEC);
 	  raise (SIGTERM);
 	}
       break;
@@ -94,9 +94,9 @@ Esbe3_adjust (esbe3_adjust_t action)
     }
   sleep (ESBE3_STEP_TIME);
 
-  if ((-1 == GPIOWrite (POUT_INC, 0)) || (-1 == GPIOWrite (POUT_INC, 0)))
+  if ((-1 == GPIOWrite (POUT_INC, 0)) || (-1 == GPIOWrite (POUT_DEC, 0)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to set pin both PGIO pins to 0 after increas/decrease");
       raise (SIGTERM);
     }
 
@@ -109,22 +109,22 @@ void
 Esbe3_safe_shutdown (void)
 {
 
-  if ((-1 == GPIOWrite (POUT_INC, 0)) || (-1 == GPIOWrite (POUT_INC, 0)))
+  if ((-1 == GPIOWrite (POUT_INC, 0)) || (-1 == GPIOWrite (POUT_DEC, 0)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to set both pins to 0");
       raise (SIGTERM);
     }
 
   if ((-1 == GPIODirection (POUT_INC, IN))
       || (-1 == GPIODirection (POUT_DEC, IN)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to set both GPIO pins to IN direction");
       raise (SIGTERM);
     }
 
   if ((-1 == GPIOUnexport (POUT_INC)) || (-1 == GPIOUnexport (POUT_DEC)))
     {
-      ml_log (LOG_ERROR, "Error reading %s, errno =%d, rasing SIGTERM");
+      ml_log (LOG_ERROR, "Failed to unexport both GPIO pins");
       raise (SIGTERM);
     }
 

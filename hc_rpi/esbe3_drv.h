@@ -13,6 +13,8 @@ typedef enum {
 	ESBE3_STEP_INCREASE,
 	ESBE3_STEP_DECREASE
 } esbe3_adjust_t;
+
+void init_esbe3_drv();
 void Esbe3_adjust(esbe3_adjust_t action);
 void Esbe3_safe_shutdown( void );
 

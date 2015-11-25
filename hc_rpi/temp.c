@@ -95,12 +95,13 @@ Temperature_init (void)
 void
 Temperature_get_temperature (temperature_t* temp, temp_spot_id_t spot_id)
 {
+
   char devPath[128]; // Path to device
   char buf[256];     // Data from device
-  char tmpData[6];   // Temp C * 1000 reported by device
   const char path[] = "/mnt/1wire/";
   ssize_t numRead;
-  float tempC;
+#define TEMP_NO_READ (-99)
+  float tempC = TEMP_NO_READ;
   int c;
 
   for (c = 0; c < NUMBER_OF_TEMPSENSORS; c++)
@@ -122,14 +123,17 @@ Temperature_get_temperature (temperature_t* temp, temp_spot_id_t spot_id)
 	  while ((numRead = read (fd, buf, 256)) > 0)
 	    {
 	      tempC = strtof (buf, NULL);
-	      printf ("Device: %s  - ", temp_spots[c].path);
-	      printf ("Temp: %.3f C  ", tempC);
 	    }
 	  close (fd);
 	  ml_log (LOG_NOTICE, "Got %.3f", tempC);
 
 	  break;
 	}
+    }
+  if (tempC == TEMP_NO_READ)
+    {
+    ml_log (LOG_ERROR, "Error read failed for some reason");
+    raise (SIGTERM);
     }
   *temp = tempC;
 
