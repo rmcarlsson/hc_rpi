@@ -72,6 +72,7 @@ typedef struct {
 	const FwdCtrl_id_t    id;
 	const temperature_t   outdoor_temp;
 	temperature_t         fwd_temp;
+    temperature_t         avg_indoor_temp;
 } FwdCtrl_point_t;
 
 /*****************************************************************************
@@ -83,7 +84,7 @@ void tFwdCtrl(void);
 void FwdCtrl_set_mode(FwdCtrl_mode_t mode);
 void FwdCtrl_init();
 
-
+void FwdCtrl_adjust_target();
 
 
 

@@ -38,7 +38,7 @@
 #include "temp.h"
 #include "mylog.h"
 
-#define NUMBER_OF_TEMPSENSORS  ((int)(2))
+#define NUMBER_OF_TEMPSENSORS  ((int)(3))
 
 typedef struct
 {
@@ -54,7 +54,8 @@ typedef struct
 
 const temp_spot_t temp_spots[NUMBER_OF_TEMPSENSORS] =
 {{ TEMP_SPOT_OUTDOOR,    "28.F67E05010000" },
- { TEMP_SPOT_FWD,        "28.C7FEFB000000" }};
+ { TEMP_SPOT_FWD,        "28.C7FEFB000000" },
+ { TEMP_SPOT_INDOOR,     "28.237A05010000" }};
 //      {
 //	{ TEMP_SPOT_OUTDOOR, "22-0000001eafca" },
 //	{ TEMP_SPOT_FWD, "22-0000001eafca" } };

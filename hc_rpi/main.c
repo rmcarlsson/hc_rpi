@@ -47,9 +47,16 @@ int main (int argc, char *argv[])
   init_esbe3_drv();
   FwdCtrl_init();
 
+  int tick = 0;
   while(1) {
     tFwdCtrl();
     sleep(60);
+    if (tick > (60 * 12))
+    {
+      FwdCtrl_adjust_target();
+      tick = 0;
+    }
+    tick++;
   }
 
   ml_close();

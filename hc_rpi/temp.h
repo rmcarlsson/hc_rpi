@@ -50,6 +50,7 @@ typedef float temperature_t;
 typedef enum {
 	TEMP_SPOT_OUTDOOR = 0,
 	TEMP_SPOT_FWD,
+	TEMP_SPOT_INDOOR
 } temp_spot_id_t;
 
 
