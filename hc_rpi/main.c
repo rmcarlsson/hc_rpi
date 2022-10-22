@@ -15,10 +15,12 @@
 #include "esbe3_drv.h"
 #include "mylog.h"
 #include "sig.h"
+#include "temp.h"
 
-int version_ma = 1;
+
+int version_ma = 2;
 int version_mi = 0;
-int version_build = 0;
+int version_build = 2;
 
 int main (int argc, char *argv[])
 {
@@ -46,12 +48,13 @@ int main (int argc, char *argv[])
 
   init_esbe3_drv();
   FwdCtrl_init();
+  Temperature_init();
 
   int tick = 0;
   while(1) {
     tFwdCtrl();
     sleep(60);
-    if (tick > (60 * 12))
+    if (tick > (60*48))
     {
       FwdCtrl_adjust_target();
       tick = 0;

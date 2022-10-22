@@ -69,7 +69,7 @@ void Esbe3_adjust(esbe3_adjust_t action)
   case ESBE3_STEP_INCREASE:
     if (moves < max_move)
     {
-      ml_log(LOG_NOTICE, "Increasing shunt ... ");
+      ml_log(LOG_NOTICE, "Increasing shunt ... (%d)", moves);
       moves++;
       if (-1 == GPIOWrite(POUT_INC, 1))
       {
@@ -80,9 +80,9 @@ void Esbe3_adjust(esbe3_adjust_t action)
     break;
 
   case ESBE3_STEP_DECREASE:
-    if (moves < -max_move)
+    if (moves > -max_move)
     {
-      ml_log(LOG_NOTICE, "Decreasing shunt ... ");
+      ml_log(LOG_NOTICE, "Decreasing shunt ... (%d)", moves);
       moves--;
       if (-1 == GPIOWrite(POUT_DEC, 1))
       {
@@ -109,7 +109,7 @@ void Esbe3_adjust(esbe3_adjust_t action)
     raise(SIGTERM);
   }
 
-  ml_log(LOG_NOTICE, "... done.");
+  //ml_log(LOG_NOTICE, "... done.");
 
   m_last_action = action;
 }

@@ -53,6 +53,7 @@ typedef enum {
 	TEMP_SPOT_INDOOR
 } temp_spot_id_t;
 
+void  Temperature_init(void);
 
 /*****************************************************************************
 *                                                                            *
